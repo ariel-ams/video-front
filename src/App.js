@@ -2,6 +2,7 @@ import './App.css';
 import VideoLibrary from './video-library/VideoLibrary';
 import VideoUpload  from "./video-upload/videoUpload";
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import VideoPlayer from './video-library/VideoPlayer';
 
 function App() {
   return (
@@ -9,22 +10,17 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path='/video/:videoId'>
-            <div>
-
-            </div>  
-          </Route>
-          <Route path='/'>
-            <VideoLibrary></VideoLibrary>
+            <VideoPlayer></VideoPlayer> 
           </Route>
           <Route path='/upload'>
             <VideoUpload></VideoUpload>
           </Route>
+          <Route path='/'>
+            <VideoLibrary></VideoLibrary>
+          </Route>
         </Switch>
       </BrowserRouter>
       <header className="App-header">
-        {/* <Player>
-        <source src="http://localhost:3000/api/video"/>
-        </Player> */}
       </header>
     </div>
   );
