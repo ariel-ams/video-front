@@ -1,4 +1,4 @@
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, Grid } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -43,22 +43,26 @@ function VideoLibrary() {
         <div className="videoLibrary">
             { isLoading ? <CircularProgress className="loading" color="secondary" /> : null }
             <div className="library__videos">
-                {
-                    videoCards.map(video => {
-                        console.log(video);
-                        return (
-                            <Link key={video.id} to={`/video/${video.id}`}>
-                                <VideoCard key={video.id}
-                                    title={video.title}
-                                    duration={video.duration}
-                                    thumbnailUrl={video.thumbnailUrl}
-                                    audioCodec={video.audioCodec}
-                                    videoCodec={video.videoCodec}
-                                />
-                            </Link>
-                        )
-                    })
-                }
+                <Grid container spacing={3}>
+                    {
+                        videoCards.map(video => {
+                            console.log(video);
+                            return (
+                                <Grid item xs>
+                                    <Link key={video.id} to={`/video/${video.id}`}>
+                                        <VideoCard key={video.id}
+                                            title={video.title}
+                                            duration={video.duration}
+                                            thumbnailUrl={video.thumbnailUrl}
+                                            audioCodec={video.audioCodec}
+                                            videoCodec={video.videoCodec}
+                                            />
+                                    </Link>
+                                </Grid>
+                            )
+                        })
+                    }
+                </Grid>
             </div>
         </div>
     );

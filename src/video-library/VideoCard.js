@@ -24,10 +24,12 @@ const VideoCard = ({title, duration, thumbnailUrl, audioCodec, videoCodec}) => {
           <CardHeader 
             title={title}
             subheader={`${minutes}:${seconds}`}
+            titleTypographyProps={{className:'header-title'}}
           />
           <CardMedia
             className="media"
             image={thumbnailUrl}
+            alt={title}
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">

@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import 'video-react/dist/video-react.css';
 
 function VideoUpload() {
   const [selectedFile, setSelectedFile] = useState();

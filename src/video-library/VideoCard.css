@@ -39,7 +39,12 @@
 } */
 
 .root {
-  max-width: 345px;
+  width: 345px;
+}
+
+.header-title{
+    max-height: 32px;
+    overflow: hidden;
 }
 
 .media {
