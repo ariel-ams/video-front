@@ -1,4 +1,4 @@
-.videocard {
+/* .videocard {
     width: 270px;
     margin-bottom: 40px;
 }
@@ -36,4 +36,14 @@
 
 .videocard__text > * {
     margin: 1px;
+} */
+
+.root {
+  max-width: 345px;
+}
+
+.media {
+  height: 0;
+  padding-top: 56.25%;
+  /* // 16:9 */
 }

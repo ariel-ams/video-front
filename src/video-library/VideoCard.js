@@ -1,26 +1,47 @@
+import { Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@material-ui/core";
 import React from "react";
 import './VideoCard.css';
 
-const VideoCard = ({title, duration, thumbnailUrl}) => {
+const VideoCard = ({title, duration, thumbnailUrl, audioCodec, videoCodec}) => {
 
     const minutes = Math.floor(duration / 60);
     const seconds = Math.floor(duration % 60);
 
     return (
-        <div className='videocard'>
+      <div>
+        
+        {/* <div className='videocard'>
           <img className='videocard__image' src={thumbnailUrl} alt='' />
           <div className="videocard__info">
-            {/* <Avatar 
-              className='videocard__avatar' 
-              alt={channel} 
-              src={channelImage} 
-            /> */}
             <div className="videocard__text">
               <h4>{title}</h4>
               <p>{minutes}:{seconds}</p>
             </div> 
           </div>
-        </div>
+        </div> */}
+
+        <Card className="root">
+          <CardHeader 
+            title={title}
+            subheader={`${minutes}:${seconds}`}
+          />
+          <CardMedia
+            className="media"
+            image={thumbnailUrl}
+          />
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              video codec: {videoCodec}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              audio codec: {audioCodec}
+            </Typography>
+          </CardContent>
+          <CardActions>
+
+          </CardActions>
+        </Card>
+      </div>
     );
 }
 

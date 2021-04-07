@@ -30,7 +30,9 @@ function VideoLibrary() {
                 title: video.name,
                 duration: video.lenghtInSeconds,
                 thumbnailUrl: video.thumbnail ? video.thumbnail : "",
-                id: video._id
+                id: video._id,
+                audioCodec: video.audioCodec,
+                videoCodec: video.videoCodec
             });
         }
         setVideoCards(newVideoCards);
@@ -50,6 +52,8 @@ function VideoLibrary() {
                                     title={video.title}
                                     duration={video.duration}
                                     thumbnailUrl={video.thumbnailUrl}
+                                    audioCodec={video.audioCodec}
+                                    videoCodec={video.videoCodec}
                                 />
                             </Link>
                         )
