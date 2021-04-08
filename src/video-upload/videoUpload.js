@@ -29,8 +29,10 @@ function VideoUpload() {
   };
 
   return (
-    <div>      
-      <input type="file" name="video" id="video" onChange={changeHandler} />
+    <div className="upload container">
+       
+      <input type="file" name="video" multiple
+      id="video" onChange={changeHandler} />
       {isFilePicked ? (
         <div>
           <p>Video name: {selectedFile.name} </p>
