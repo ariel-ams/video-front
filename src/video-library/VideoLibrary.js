@@ -1,16 +1,24 @@
 import { CircularProgress, Grid } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import VideoCard from "./VideoCard";
 import './VideoLibrary.css';
 
 function VideoLibrary() {
     const [videoCards, setVideoCards] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    //const [isError, setIsError] = useState(false);
 
     useEffect(() => {
+        loadRequest();
+        }, 
+    []);
+
+    const loadVideos = () => {
+        setVideoCards([]);
+        loadRequest();
+    }
+
+    function loadRequest(){
         axios
           .get(`http://localhost:3000/api/videos/library`)
           .then(response => {
@@ -20,8 +28,7 @@ function VideoLibrary() {
           .catch(error => {
             console.log(error);
           })
-        }, 
-    []);
+    }
 
     async function createVideoCards(videos){
         let newVideoCards = [];
@@ -48,16 +55,16 @@ function VideoLibrary() {
                         videoCards.map(video => {
                             console.log(video);
                             return (
-                                <Grid item xs>
-                                    <Link key={video.id} to={`/video/${video.id}`}>
-                                        <VideoCard key={video.id}
-                                            title={video.title}
-                                            duration={video.duration}
-                                            thumbnailUrl={video.thumbnailUrl}
-                                            audioCodec={video.audioCodec}
-                                            videoCodec={video.videoCodec}
-                                            />
-                                    </Link>
+                                <Grid item xs key={video.id}>
+                                    <VideoCard
+                                        title={video.title}
+                                        duration={video.duration}
+                                        thumbnailUrl={video.thumbnailUrl}
+                                        audioCodec={video.audioCodec}
+                                        videoCodec={video.videoCodec}
+                                        id={video.id}
+                                        loadVideos={loadVideos} 
+                                        />
                                 </Grid>
                             )
                         })
@@ -66,6 +73,6 @@ function VideoLibrary() {
             </div>
         </div>
     );
-};
+}
 
 export default VideoLibrary;

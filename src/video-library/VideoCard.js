@@ -1,50 +1,103 @@
-import { Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@material-ui/core";
+import {
+  Card,
+  Button,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
+import PlayIcon from '@material-ui/icons/PlayArrow';
+import axios from "axios";
 import React from "react";
-import './VideoCard.css';
+import { useHistory } from "react-router";
+import "./VideoCard.css";
 
-const VideoCard = ({title, duration, thumbnailUrl, audioCodec, videoCodec}) => {
+const VideoCard = ({
+  title,
+  duration,
+  thumbnailUrl,
+  audioCodec,
+  videoCodec,
+  id,
+  loadVideos
+}) => {
+  const [open, setOpen] = React.useState(false);
+  let history = useHistory();
 
-    const minutes = Math.floor(duration / 60);
-    const seconds = Math.floor(duration % 60);
+  const minutes = Math.floor(duration / 60);
+  const seconds = Math.floor(duration % 60);
 
-    return (
-      <div>
-        
-        {/* <div className='videocard'>
-          <img className='videocard__image' src={thumbnailUrl} alt='' />
-          <div className="videocard__info">
-            <div className="videocard__text">
-              <h4>{title}</h4>
-              <p>{minutes}:{seconds}</p>
-            </div> 
-          </div>
-        </div> */}
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-        <Card className="root">
-          <CardHeader 
-            title={title}
-            subheader={`${minutes}:${seconds}`}
-            titleTypographyProps={{className:'header-title'}}
-          />
-          <CardMedia
-            className="media"
-            image={thumbnailUrl}
-            alt={title}
-          />
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              video codec: {videoCodec}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              audio codec: {audioCodec}
-            </Typography>
-          </CardContent>
-          <CardActions>
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-          </CardActions>
-        </Card>
-      </div>
-    );
-}
+  const deleteVideo = () => {
+    axios.delete(`http://localhost:3000/api/videos/${id}`)
+    .then(() => {
+      setOpen(false);
+      loadVideos();
+    });
+  };
+
+  const playVideo = () => {
+    history.push(`/video/${id}`);
+  }
+
+  return (
+    <div>
+      <Card className="root">
+        <CardHeader
+          title={title}
+          subheader={`${minutes}:${seconds}`}
+          titleTypographyProps={{ className: "header-title" }}
+        />
+        <CardMedia className="media" image={thumbnailUrl} alt={title} />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            video codec: {videoCodec}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            audio codec: {audioCodec}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <IconButton onClick={playVideo}>
+              <PlayIcon></PlayIcon>
+          </IconButton>
+          <IconButton onClick={handleClickOpen}>
+            <DeleteIcon></DeleteIcon>
+          </IconButton>
+        </CardActions>
+      </Card>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Do you want to delete this video?"}</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Disagree
+          </Button>
+          <Button onClick={deleteVideo} color="primary" autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
 
 export default VideoCard;
