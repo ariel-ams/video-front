@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { Player } from "video-react";
+import 'video-react/dist/video-react.css';
 
 function VideoPlayer(){
     let { videoId } = useParams();
